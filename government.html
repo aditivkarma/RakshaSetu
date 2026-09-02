@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>RakshaSetu — Government Panel | Command & Control Dashboard</title>
+  <meta name="title" content="RakshaSetu — Government Panel | Command & Control Dashboard">
+  <meta name="description" content="Official Government Command & Control Dashboard for RakshaSetu Disaster Preparedness & Emergency Response Platform. Macro hazard monitoring, AI risk prediction, and multi-department disaster dispatch.">
+  <meta name="keywords" content="RakshaSetu, Disaster Management, Command Center, GIS Incident Map, AI Risk Prediction, Evacuation Planning, NDRF Dispatch, Government Portal">
+  <meta name="author" content="National Disaster Response Directorate">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://rakshasetu.gov.in/government.html">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rakshasetu.gov.in/government.html">
+  <meta property="og:title" content="RakshaSetu — Government Command & Control Dashboard">
+  <meta property="og:description" content="Real-time macro decision-making, GIS flood inundation modeling, department logistics, and automated alert broadcasts.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1200&auto=format&fit=crop&q=80">
+  <meta property="og:site_name" content="RakshaSetu Platform">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://rakshasetu.gov.in/government.html">
+  <meta property="twitter:title" content="RakshaSetu — Government Command & Control Dashboard">
+  <meta property="twitter:description" content="Real-time macro decision-making, GIS flood inundation modeling, and disaster response coordination.">
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1200&auto=format&fit=crop&q=80">
+
+  <!-- Structured Data: JSON-LD for Google Search & Semantic Web -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GovernmentService",
+    "name": "RakshaSetu Government Command & Control Portal",
+    "serviceType": "Emergency Management & Disaster Response",
+    "provider": {
+      "@type": "GovernmentOrganization",
+      "name": "National Disaster Management Authority (NDMA)"
+    },
+    "description": "Unified command console providing real-time spatial GIS hazard analytics, resource allocation, and multi-agency emergency response orchestration.",
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Assam & Brahmaputra River Basin"
+    },
+    "availableChannel": {
+      "@type": "ServiceChannel",
+      "serviceUrl": "https://rakshasetu.gov.in/government.html",
+      "servicePhone": "112"
+    }
+  }
+  </script>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Mapbox GL JS & Leaflet GIS Engine (SRS Section 3) -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Socket.IO Client (SRS Section 7.1) -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+  <!-- Lucide Icons & Chart.js -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Classy Typography: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+              950: '#0a1530',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Glassmorphic Card System */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dark .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    }
+    .glass-panel:hover {
+      box-shadow: 0 10px 25px -4px rgba(37, 99, 235, 0.08);
+    }
+    
+    /* Radar Scanner Effect for GIS Map */
+    @keyframes radarSweep {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .radar-sweep-effect {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 280px;
+      height: 280px;
+      margin-top: -140px;
+      margin-left: -140px;
+      border-radius: 50%;
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      pointer-events: none;
+      z-index: 400;
+    }
+    .radar-sweep-effect::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(37, 99, 235, 0.22) 0deg, transparent 70deg);
+      animation: radarSweep 5s linear infinite;
+    }
+
+    /* Toast Notification */
+    #toast-notification {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#070d1d] text-slate-900 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white transition-colors duration-300">
+
+  <!-- UNIFIED CONNECTED NAV BAR (Synchronized across all panels) -->
+  <header class="bg-slate-950 text-white px-4 lg:px-6 py-2.5 shadow-lg border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Active Role Capsule -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2.5 group" title="Return to RakshaSetu Gateway">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-extrabold shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+            🛡️
+          </div>
+          <div>
+            <div class="font-extrabold text-sm tracking-tight flex items-center gap-1.5 text-white">
+              RakshaSetu <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono font-bold border border-blue-500/30">v2.0</span>
+            </div>
+            <div class="text-[10px] text-blue-200/80 font-medium">Consolidated Emergency Management Suite</div>
+          </div>
+        </a>
+
+        <!-- Role Badge with Pill Indicator -->
+        <div class="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-800">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-blue-400 bg-blue-950/80 border border-blue-500/30 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+            1. Government Command Center
+          </span>
+        </div>
+      </div>
+
+      <!-- Center: Persistent Classy Role-Switching Pills -->
+      <nav class="hidden xl:flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800 text-xs font-semibold" aria-label="Role Navigation">
+        <a href="government.html" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white shadow-sm font-bold flex items-center gap-1.5" aria-current="page">
+          <span>🏛️ Government</span>
+        </a>
+        <a href="citizen.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span>👤 Citizen</span>
+        </a>
+        <a href="responder.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span>🚑 Rescue Team</span>
+        </a>
+        <a href="admin.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span>⚙️ Admin</span>
+        </a>
+      </nav>
+
+      <!-- Right: Real-Time Telemetry, Theme Synchronizer & Profile -->
+      <div class="flex items-center gap-2.5 text-xs">
+        
+        <!-- Live Socket Telemetry Beacon (SRS Section 7.1) -->
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 font-mono text-[11px]">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span id="ws-indicator">WebSocket: Active</span>
+        </div>
+
+        <!-- Audio Alert Chime Toggle -->
+        <button onclick="toggleAudioAlert()" id="audio-alert-btn" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Toggle Emergency Audio Chime">
+          <i data-lucide="volume-2" class="w-4 h-4 text-blue-400"></i>
+        </button>
+
+        <!-- Connected Theme Switcher (Synchronized via localStorage) -->
+        <div class="flex items-center bg-slate-800 p-0.5 rounded-lg border border-slate-700">
+          <button onclick="setConnectedTheme('light')" id="theme-btn-light" class="p-1 rounded text-slate-400 hover:text-white" title="Light Theme">
+            <i data-lucide="sun" class="w-3.5 h-3.5"></i>
+          </button>
+          <button onclick="setConnectedTheme('dark')" id="theme-btn-dark" class="p-1 rounded text-slate-400 hover:text-white" title="Dark Theme">
+            <i data-lucide="moon" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Role Jump Selector (Mobile View) -->
+        <select onchange="location.href=this.value" class="xl:hidden bg-slate-800 border border-slate-700 text-white rounded-lg px-2 py-1 text-xs focus:outline-none cursor-pointer">
+          <option value="government.html" selected>🏛️ Government</option>
+          <option value="citizen.html">👤 Citizen</option>
+          <option value="responder.html">🚑 Rescue Team</option>
+          <option value="admin.html">⚙️ Admin</option>
+          <option value="index.html">🌐 All Panels Portal</option>
+        </select>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- SUB-BAR: Official Specification Title Banner -->
+  <div class="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white px-4 lg:px-6 py-2 shadow-sm border-b border-blue-950 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <div class="max-w-[1720px] mx-auto w-full flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold tracking-wide uppercase">1. GOVERNMENT PANEL – COMMAND & CONTROL DASHBOARD</span>
+        <span class="text-blue-200 hidden md:inline">• Real-time overview for decision making, monitoring & coordination</span>
+      </div>
+      <div class="flex items-center gap-3 font-mono text-[11px] text-blue-200">
+        <span>Region: Brahmaputra River Basin</span>
+        <span>•</span>
+        <span class="text-white font-bold" id="gov-live-clock">18 May 2025 | 10:30 AM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col md:flex-row min-h-0 max-w-[1720px] mx-auto w-full">
+
+    <!-- LEFT SIDEBAR (Dark Obsidian Command Sidebar) -->
+    <aside class="w-full md:w-60 bg-slate-950 text-slate-300 flex flex-col flex-shrink-0 border-r border-slate-800/80" aria-label="Command Center Navigation">
+      
+      <!-- User Profile Header -->
+      <div class="p-4 border-b border-slate-800/80 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600/30 text-blue-400 border border-blue-500/40 flex items-center justify-center font-bold text-sm shadow-sm">
+          JD
+        </div>
+        <div>
+          <div class="font-bold text-white text-xs leading-tight">J. Das, IAS</div>
+          <div class="text-[10px] text-slate-400 font-medium">State Relief Commissioner</div>
+          <div class="text-[9px] text-emerald-400 font-mono mt-0.5">● Level-3 Auth Granted</div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu (All items from official mockup) -->
+      <nav class="p-3 space-y-1 text-xs font-medium flex-1 overflow-y-auto custom-scrollbar">
+        <a href="government.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md shadow-blue-600/30">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#incidents" onclick="fetchSRSIncidents()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400"></i>
+          <span>Incidents</span>
+          <span class="ml-auto px-2 py-0.5 text-[10px] bg-red-500/20 text-red-400 font-mono font-bold rounded-full">12 Active</span>
+        </a>
+        <a href="#alerts" onclick="openAlertBroadcastModal()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="bell" class="w-4 h-4 text-amber-400"></i>
+          <span>Alerts & Notifications</span>
+        </a>
+        <a href="#resources" onclick="fetchSRSResources()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="boxes" class="w-4 h-4 text-emerald-400"></i>
+          <span>Resource Management</span>
+        </a>
+        <a href="#departments" onclick="fetchSRSDepartments()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="building" class="w-4 h-4 text-blue-400"></i>
+          <span>Departments</span>
+        </a>
+        <a href="#analytics" onclick="showModal('Platform Deep Analytics (SRS Section 6.1)', 'Incident Response Latency: 14.2 min (down 22%)\nMean Evacuation Completion: 88.4%\nAutomated Sensor Verification Rate: 94.6%')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="bar-chart-2" class="w-4 h-4 text-purple-400"></i>
+          <span>Analytics & Reports</span>
+        </a>
+        <a href="#map" onclick="refreshMapLayers()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="map" class="w-4 h-4 text-cyan-400"></i>
+          <span>GIS Spatial Map</span>
+        </a>
+        <a href="#comms" onclick="showModal('Emergency Communication Hub', 'Direct VHF Radio Mesh link established with NDRF Battalion 1 & 4.\nFrequency: 462.5625 MHz (Ch 1 Encrypted).')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="radio" class="w-4 h-4 text-teal-400"></i>
+          <span>Communication</span>
+        </a>
+        <a href="#evacuation" onclick="showModal('Smart Evacuation Management', 'Dynamic evacuation corridors active across NH-27 & GS Road.\nBridge clearance verified for heavy transport.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="navigation" class="w-4 h-4 text-orange-400"></i>
+          <span>Evacuation Management</span>
+        </a>
+        <a href="#shelters" onclick="showModal('Relief Shelters Registry', '45 active shelters with 8,450 verified occupants.\nStock status: 4.8 days remaining rations.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="home" class="w-4 h-4 text-indigo-400"></i>
+          <span>Shelters</span>
+        </a>
+        <a href="#citizen-reports" onclick="showModal('Citizen Ingest Stream (Kafka topic: incident.created)', '86 citizen verified reports received in last 6 hours.\nAverage sentiment: High urgency / 12 rescue requests.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i>
+          <span>Citizen Reports</span>
+        </a>
+        <a href="#ai-predictions" onclick="openAiFeatureModal('AI Risk Prediction & Sensing Model', 'RakshaSetu Sensing Model fuses IoT sensor streams with citizen reports (SRS Section 8.4). Z-score deviation model flags potential anomalies.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="cpu" class="w-4 h-4 text-pink-400"></i>
+          <span>AI Predictions</span>
+        </a>
+        
+        <div class="pt-2 pb-1 border-t border-slate-800/80"></div>
+        
+        <a href="#settings" onclick="showModal('System Settings', 'API Gateway: Kong/AWS API Gateway\nKafka Cluster: Healthy (3 brokers)\nPostgreSQL 16 + PostGIS: Synced.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="settings" class="w-4 h-4 text-slate-400"></i>
+          <span>Settings</span>
+        </a>
+        <a href="#users" onclick="showModal('Keycloak RBAC User Management', 'Role: Government Officer (Full state/district operational read/write authority).')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 hover:text-white transition">
+          <i data-lucide="users" class="w-4 h-4 text-slate-400"></i>
+          <span>User Management</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Footer Status -->
+      <div class="p-3 bg-slate-900/60 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-slate-400">NestJS Gateway</span>
+        </div>
+        <span class="text-emerald-400 font-bold">ONLINE</span>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto custom-scrollbar p-4 lg:p-6 space-y-6">
+      
+      <!-- SUB-HEADER: Filters, District Picker, Breadcrumb -->
+      <div class="glass-panel p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2.5">
+          <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200">
+            <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+            <select class="bg-transparent focus:outline-none cursor-pointer">
+              <option>State Level View (Assam)</option>
+              <option>National Grid Overview</option>
+              <option>Zonal Emergency View</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-200">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"></i>
+            <select class="bg-transparent focus:outline-none cursor-pointer" onchange="filterDistrict(this.value)">
+              <option value="all">All Districts (27)</option>
+              <option value="kamrup">Kamrup Metropolitan (Guwahati)</option>
+              <option value="dibrugarh">Dibrugarh Basin</option>
+              <option value="cachar">Cachar / Silchar</option>
+              <option value="sonitpur">Sonitpur / Tezpur</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 text-xs">
+          <!-- Live Sensor Telemetry Count -->
+          <div class="hidden sm:flex items-center gap-2 font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
+            <i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-500"></i>
+            <span>Telemetry: 142 River Nodes Active</span>
+          </div>
+
+          <!-- Quick Refresh Button -->
+          <button onclick="triggerDataSync()" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Sync live state from PostgreSQL">
+            <i data-lucide="rotate-cw" class="w-4 h-4 text-slate-600 dark:text-slate-300"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 TOP STAT CARDS (Exact values & refined luxury aesthetics) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Card 1: Active Incidents -->
+        <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-red-500 flex items-center gap-4 hover:-translate-y-0.5 transition">
+          <div class="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 flex items-center justify-center text-xl font-bold flex-shrink-0 border border-red-200 dark:border-red-900/50 shadow-sm shadow-red-500/10">
+            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-3xl font-black text-slate-900 dark:text-white font-mono tracking-tight">12</div>
+            <div class="text-xs font-bold text-slate-600 dark:text-slate-300">Active Incidents</div>
+            <div class="text-[11px] text-red-600 dark:text-red-400 font-semibold flex items-center gap-1 mt-0.5">
+              <span>↑ 2 from yesterday</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Affected Areas -->
+        <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-blue-500 flex items-center gap-4 hover:-translate-y-0.5 transition">
+          <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold flex-shrink-0 border border-blue-200 dark:border-blue-900/50 shadow-sm shadow-blue-500/10">
+            <i data-lucide="map-pin" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-3xl font-black text-slate-900 dark:text-white font-mono tracking-tight">256</div>
+            <div class="text-xs font-bold text-slate-600 dark:text-slate-300">Affected Areas</div>
+            <div class="text-[11px] text-blue-600 dark:text-blue-400 font-semibold flex items-center gap-1 mt-0.5">
+              <span>↑ 18 from yesterday</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: People Affected -->
+        <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-cyan-500 flex items-center gap-4 hover:-translate-y-0.5 transition">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-xl font-bold flex-shrink-0 border border-cyan-200 dark:border-cyan-900/50 shadow-sm shadow-cyan-500/10">
+            <i data-lucide="users" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-3xl font-black text-slate-900 dark:text-white font-mono tracking-tight">8,450</div>
+            <div class="text-xs font-bold text-slate-600 dark:text-slate-300">People Affected</div>
+            <div class="text-[11px] text-cyan-600 dark:text-cyan-400 font-semibold flex items-center gap-1 mt-0.5">
+              <span>↑ 1,250 from yesterday</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Relief Camps -->
+        <div class="glass-panel p-4 rounded-2xl border-l-4 border-l-amber-500 flex items-center gap-4 hover:-translate-y-0.5 transition">
+          <div class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl font-bold flex-shrink-0 border border-amber-200 dark:border-amber-900/50 shadow-sm shadow-amber-500/10">
+            <i data-lucide="tent" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-3xl font-black text-slate-900 dark:text-white font-mono tracking-tight">45</div>
+            <div class="text-xs font-bold text-slate-600 dark:text-slate-300">Relief Camps</div>
+            <div class="text-[11px] text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1 mt-0.5">
+              <span>3 new opened</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MIDDLE ROW: GIS TACTICAL MAP & RECENT ALERTS -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Live Incident Spatial Map (col-span-8) -->
+        <div class="lg:col-span-8 glass-panel p-4 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+              <h2 class="text-sm font-bold text-slate-900 dark:text-white">Live Spatial GIS Map (Mapbox & PostGIS)</h2>
+            </div>
+
+            <!-- Legend Pills -->
+            <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-600 dark:text-slate-300 font-medium">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> High Risk</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span> Medium</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Low</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rotate-45 bg-blue-600"></span> Shelter</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-emerald-600"></span> Logistics</span>
+            </div>
+          </div>
+
+          <!-- Map Container with Radar Scanner -->
+          <div class="relative w-full h-[330px] rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+            <div id="gov-map" class="w-full h-full z-10"></div>
+            <div class="radar-sweep-effect hidden md:block"></div>
+
+            <!-- Overlaid Map Layer Toggles -->
+            <div class="absolute top-3 left-3 z-[400] glass-panel p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-[11px] space-y-1.5 font-medium shadow-md">
+              <div class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                <i data-lucide="filter" class="w-3 h-3 text-blue-600"></i> Map Layers
+              </div>
+              <label class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" checked id="layer-flood" onchange="toggleLayer('flood')" class="rounded text-red-600"> Brahmaputra Flood Inundation
+              </label>
+              <label class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" checked id="layer-shelters" onchange="toggleLayer('shelters')" class="rounded text-blue-600"> Active Relief Camps
+              </label>
+              <label class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 cursor-pointer">
+                <input type="checkbox" checked id="layer-teams" onchange="toggleLayer('teams')" class="rounded text-emerald-600"> Deployed Responders
+              </label>
+            </div>
+          </div>
+
+          <!-- Coordinates Bar -->
+          <div class="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 mt-2 font-mono">
+            <span>Center: 26.1802° N, 91.7539° E (Guwahati, Assam)</span>
+            <span>Projection: EPSG:3857 (WGS 84 / Pseudo-Mercator)</span>
+          </div>
+        </div>
+
+        <!-- Recent Alerts Feed (col-span-4) -->
+        <div class="lg:col-span-4 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200 dark:border-slate-800">
+              <h2 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <i data-lucide="bell-ring" class="w-4 h-4 text-red-500 animate-bounce"></i>
+                Recent Alerts
+              </h2>
+              <button onclick="showModal('Emergency Alert Registry (SRS Section 6.1)', 'Level-3 Broadcasts:\n1. Brahmaputra River Basin - Flood Inundation\n2. Bay of Bengal - Cyclonic Circulation Alert\n3. Himachal Pradesh - Flash Landslide Hazard\n4. Coastal Karnataka - Heavy Downpour Alert')" class="text-xs text-blue-600 dark:text-blue-400 font-bold hover:underline">View All</button>
+            </div>
+
+            <!-- List matching reference image -->
+            <div class="space-y-2.5">
+              <!-- Alert 1 -->
+              <div class="p-3 rounded-xl bg-red-50/70 dark:bg-red-950/30 border border-red-200/80 dark:border-red-900/40 flex items-start gap-3 hover:scale-[1.01] transition-transform cursor-pointer" onclick="focusMapAlert(26.1445, 91.7362, 'Flood Warning: Brahmaputra River Basin')">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600 mt-1 flex-shrink-0 animate-ping"></span>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs font-bold text-red-950 dark:text-red-200">Flood Warning</div>
+                  <div class="text-[11px] text-red-800 dark:text-red-300 font-medium truncate">Brahmaputra River Basin</div>
+                  <div class="text-[10px] text-red-600 dark:text-red-400 font-mono mt-0.5">Severity: High • 18 Nov, 09:15 AM</div>
+                </div>
+                <button class="text-[10px] bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg font-bold transition">Inspect</button>
+              </div>
+
+              <!-- Alert 2 -->
+              <div class="p-3 rounded-xl bg-orange-50/70 dark:bg-orange-950/30 border border-orange-200/80 dark:border-orange-900/40 flex items-start gap-3 hover:scale-[1.01] transition-transform cursor-pointer" onclick="focusMapAlert(20.5, 87.2, 'Cyclone Alert: Bay of Bengal')">
+                <span class="w-2.5 h-2.5 rounded-full bg-orange-500 mt-1 flex-shrink-0"></span>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs font-bold text-orange-950 dark:text-orange-200">Cyclone Alert</div>
+                  <div class="text-[11px] text-orange-800 dark:text-orange-300 font-medium truncate">Bay of Bengal Coastal Belt</div>
+                  <div class="text-[10px] text-orange-600 dark:text-orange-400 font-mono mt-0.5">Severity: Medium • 18 Nov, 08:30 AM</div>
+                </div>
+                <button class="text-[10px] bg-orange-600 hover:bg-orange-700 text-white px-2 py-1 rounded-lg font-bold transition">Inspect</button>
+              </div>
+
+              <!-- Alert 3 -->
+              <div class="p-3 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/40 flex items-start gap-3 hover:scale-[1.01] transition-transform cursor-pointer" onclick="focusMapAlert(31.1048, 77.1734, 'Landslide Risk: Himachal Pradesh')">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 mt-1 flex-shrink-0"></span>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs font-bold text-amber-950 dark:text-amber-200">Landslide Risk</div>
+                  <div class="text-[11px] text-amber-800 dark:text-amber-300 font-medium truncate">Himachal Pradesh - Shimla NH</div>
+                  <div class="text-[10px] text-amber-600 dark:text-amber-400 font-mono mt-0.5">Severity: Moderate • 18 Nov, 07:45 AM</div>
+                </div>
+                <button class="text-[10px] bg-amber-600 hover:bg-amber-700 text-white px-2 py-1 rounded-lg font-bold transition">Inspect</button>
+              </div>
+
+              <!-- Alert 4 -->
+              <div class="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 flex items-start gap-3 hover:scale-[1.01] transition-transform cursor-pointer" onclick="focusMapAlert(10.8505, 76.2711, 'Heavy Rainfall: Kerala & Karnataka')">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500 mt-1 flex-shrink-0"></span>
+                <div class="flex-1 min-w-0">
+                  <div class="text-xs font-bold text-blue-950 dark:text-blue-200">Heavy Rainfall</div>
+                  <div class="text-[11px] text-blue-800 dark:text-blue-300 font-medium truncate">Kerala & Coastal Karnataka</div>
+                  <div class="text-[10px] text-blue-600 dark:text-blue-400 font-mono mt-0.5">Advisory: Orange • 18 Nov, 06:10 AM</div>
+                </div>
+                <button class="text-[10px] bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded-lg font-bold transition">Inspect</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 font-mono">
+            <span>Kafka: alert.broadcast</span>
+            <span class="text-emerald-500 font-bold">● Stream Synced</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ROW: CHARTS, DEPARTMENTS & QUICK ACTIONS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5">
+        
+        <!-- Incident Trend Chart (col-span-4) -->
+        <div class="lg:col-span-4 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-2">
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+              Incident Trend (Last 7 Days)
+            </h3>
+            <span class="text-[10px] font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded-md">Past Week</span>
+          </div>
+          <div class="h-44 relative">
+            <canvas id="gov-trend-chart"></canvas>
+          </div>
+          <div class="text-[10px] font-mono text-slate-400 text-right mt-1">12 May – 18 May 2025</div>
+        </div>
+
+        <!-- Resource Availability Donut (col-span-3) -->
+        <div class="lg:col-span-3 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-2">
+            <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+              <i data-lucide="pie-chart" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+              Resource Availability
+            </h3>
+          </div>
+          <div class="h-36 relative flex items-center justify-center">
+            <canvas id="gov-resource-chart"></canvas>
+          </div>
+          <!-- Legend list -->
+          <div class="grid grid-cols-2 gap-1.5 text-[10px] text-slate-600 dark:text-slate-300 mt-2 font-medium">
+            <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Rescue Teams 65%</div>
+            <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span> Medical Teams 40%</div>
+            <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Vehicles 70%</div>
+            <div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Shelters 85%</div>
+            <div class="flex items-center gap-1 col-span-2"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Drones 50%</div>
+          </div>
+        </div>
+
+        <!-- Department Coordination (col-span-3) -->
+        <div class="lg:col-span-3 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-2">
+              <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <i data-lucide="users-2" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                Department Coordination
+              </h3>
+            </div>
+
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> NDRF
+                </div>
+                <div class="text-slate-500 dark:text-slate-400 text-[11px] font-mono">12 Teams</div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-mono">Active</span>
+              </div>
+
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Police
+                </div>
+                <div class="text-slate-500 dark:text-slate-400 text-[11px] font-mono">20 Teams</div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-mono">Active</span>
+              </div>
+
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Health Dept.
+                </div>
+                <div class="text-slate-500 dark:text-slate-400 text-[11px] font-mono">15 Teams</div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-mono">Active</span>
+              </div>
+
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Fire Services
+                </div>
+                <div class="text-slate-500 dark:text-slate-400 text-[11px] font-mono">18 Teams</div>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 font-mono">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-slate-400 mt-2 font-mono">Responders deployed: 650+ personnel</div>
+        </div>
+
+        <!-- Quick Actions (col-span-2) -->
+        <div class="lg:col-span-2 bg-gradient-to-b from-blue-600 via-blue-700 to-indigo-800 p-4 rounded-2xl text-white shadow-lg shadow-blue-600/20 flex flex-col justify-between">
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-blue-100 pb-2 border-b border-blue-400/40 mb-3 flex items-center gap-1.5">
+              <i data-lucide="zap" class="w-4 h-4 text-amber-300"></i>
+              Quick Actions
+            </h3>
+
+            <div class="space-y-2">
+              <button onclick="openActionModal('Send Emergency Alert', 'POST /api/v1/gov/alerts - Broadcasts to Kafka topic alert.broadcast')" class="w-full py-2 px-3 rounded-xl bg-white text-blue-700 hover:bg-blue-50 text-xs font-bold transition shadow-sm flex items-center justify-center gap-1.5">
+                <i data-lucide="radio" class="w-3.5 h-3.5"></i> Send Alert
+              </button>
+
+              <button onclick="openActionModal('Activate Response Teams', 'POST /api/v1/gov/responders/deploy - Deploys SDRF/NDRF teams via Mission Service')" class="w-full py-2 px-3 rounded-xl bg-blue-900/60 hover:bg-blue-900 text-white text-xs font-semibold transition border border-blue-400/30 flex items-center justify-center gap-1.5">
+                <i data-lucide="users" class="w-3.5 h-3.5"></i> Activate Teams
+              </button>
+
+              <button onclick="openActionModal('Open Emergency Shelter', 'PUT /api/v1/gov/shelters - Authorizes emergency opening of designated centers')" class="w-full py-2 px-3 rounded-xl bg-blue-900/60 hover:bg-blue-900 text-white text-xs font-semibold transition border border-blue-400/30 flex items-center justify-center gap-1.5">
+                <i data-lucide="home" class="w-3.5 h-3.5"></i> Open Shelter
+              </button>
+
+              <button onclick="openActionModal('Request Central Resources', 'POST /api/v1/gov/resources/requisition - Submits NDMA resource requisition')" class="w-full py-2 px-3 rounded-xl bg-blue-900/60 hover:bg-blue-900 text-white text-xs font-semibold transition border border-blue-400/30 flex items-center justify-center gap-1.5">
+                <i data-lucide="truck" class="w-3.5 h-3.5"></i> Request Resources
+              </button>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-blue-200 mt-3 text-center font-mono">Protocol: Code Alpha-1</div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM ROW: INNOVATIVE FEATURES (6 cards with exact SRS AI/ML mathematical models) -->
+      <div class="glass-panel p-4 rounded-2xl space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">INNOVATIVE FEATURES</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">RakshaSetu AI/ML & Sensing Architecture (SRS Section 8)</span>
+          </div>
+          <span class="text-[11px] text-slate-400 hidden sm:inline">Click any capability to inspect algorithms</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          
+          <!-- Feature 1: AI Risk Prediction -->
+          <div onclick="openAiFeatureModal('AI Risk Prediction & Z-Score Anomaly Detector', 'SRS Section 8.1: Z-Score Statistical Detector comparing live observations against historical baseline:\n\nz = (current_value - mean) / std_dev\n\n• Normal: z < 2\n• Warning: 2 <= z <= 3\n• Critical: z > 3\n\nCurrent Brahmaputra Inundation z-score: 3.42 [CRITICAL]')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-blue-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="brain" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">AI Risk Prediction</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Predicts potential disasters using ML models</div>
+          </div>
+
+          <!-- Feature 2: Digital Twin Map -->
+          <div onclick="openAiFeatureModal('Digital Twin Map & Hydrological Simulation', 'Simulates multi-variable dam breach scenarios and water level runoff using Python + FastAPI models. Interfaced with PostGIS elevation grids.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-indigo-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="box" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Digital Twin Map</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Simulate scenarios & impact analysis</div>
+          </div>
+
+          <!-- Feature 3: IoT Sensor Network & Sensing Fusion -->
+          <div onclick="openAiFeatureModal('IoT Sensor Network (Sensing Model v1 - SRS Section 8.4)', 'Weighted Source Fusion Model:\n\nfused_value = Σ(source_value × trust_weight) / Σ(trust_weight)\n\nTrust Weights:\nField Responder (0.45) > IoT Sensor (0.30) > Verified Citizen (0.20) > Unverified Citizen (0.05).')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-emerald-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="wifi" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">IoT Sensor Network</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Real-time data from sensors & devices</div>
+          </div>
+
+          <!-- Feature 4: Smart Evacuation -->
+          <div onclick="openAiFeatureModal('Smart Evacuation Routing Engine', 'SRS Section 6.5: GET /api/v1/geo/directions - Calculates dynamically optimized paths avoiding flooded road segments and landslide closures.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-amber-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="route" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Smart Evacuation</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">AI optimized evacuation routes</div>
+          </div>
+
+          <!-- Feature 5: Drone Surveillance -->
+          <div onclick="openAiFeatureModal('Tactical Drone Surveillance Feed', 'Live WebRTC streaming from UAV swarms over Brahmaputra river bend. Computer vision detects trapped citizens on isolated terrain.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-cyan-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-900/40 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="camera" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Drone Surveillance</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Live drone feeds & area scanning</div>
+          </div>
+
+          <!-- Feature 6: Voice Command -->
+          <div onclick="openAiFeatureModal('Voice Command Dispatch Interface', 'NLP intent parser converting natural speech commands from Incident Commander into authenticated REST dispatches to Field Teams.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-pink-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="mic" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Voice Command</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Voice-enabled control & reporting</div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-notification" class="fixed bottom-5 right-5 z-[2000] translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2.5 text-xs font-medium">
+      <span id="toast-icon">✓</span>
+      <span id="toast-message">Notification</span>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE MODAL COMPONENT -->
+  <div id="general-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-[1000] hidden flex items-center justify-center p-4">
+    <div class="glass-panel bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl p-6 space-y-4 transform transition-all scale-95 opacity-0 duration-200" id="modal-container">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <h3 id="modal-title" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"></h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="modal-body" class="text-xs text-slate-600 dark:text-slate-300 space-y-3 leading-relaxed"></div>
+      <div class="flex justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+        <button onclick="closeModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold hover:bg-slate-200 transition">Close</button>
+        <button onclick="executeModalAction()" id="modal-action-btn" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition shadow-md shadow-blue-600/30">Confirm Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAKSHASETU SRS JAVASCRIPT & REAL-TIME SOCKET LAYER -->
+  <script>
+    lucide.createIcons();
+
+    // 1. CONNECTED THEME SYSTEM (Synchronized across all 4 panels via localStorage)
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem('rakshasetu_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
+    }
+    function setConnectedTheme(mode) {
+      localStorage.setItem('rakshasetu_theme', mode);
+      applySavedTheme();
+      showToast(mode === 'dark' ? '🌙 Dark Theme Applied' : '☀️ Light Theme Applied');
+    }
+    applySavedTheme();
+
+    // 2. TOAST NOTIFICATION UTILITY
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = msg;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // 3. AUDIO EMERGENCY CHIME (Web Audio API - Zero external assets needed)
+    let audioContext = null;
+    let audioAlertsEnabled = true;
+    function playEmergencyChime() {
+      if (!audioAlertsEnabled) return;
+      try {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioContext.currentTime); // A5
+        osc.frequency.exponentialRampToValueAtTime(440, audioContext.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.start();
+        osc.stop(audioContext.currentTime + 0.35);
+      } catch (e) {}
+    }
+    function toggleAudioAlert() {
+      audioAlertsEnabled = !audioAlertsEnabled;
+      const btn = document.getElementById('audio-alert-btn');
+      if (audioAlertsEnabled) {
+        btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 text-blue-400"></i>';
+        showToast('🔊 Audio Chimes Enabled');
+        playEmergencyChime();
+      } else {
+        btn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4 text-slate-400"></i>';
+        showToast('🔇 Audio Chimes Muted');
+      }
+      lucide.createIcons();
+    }
+
+    // 4. RAKSHASETU REST API CLIENT (SRS Section 6.1)
+    const RakshaSetuAPI = {
+      baseURL: 'http://localhost:3000/api/v1',
+      token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.srs-demo-token',
+
+      async getDashboardSummary() {
+        console.log(`[REST] GET ${this.baseURL}/gov/dashboard/summary`);
+        return {
+          activeIncidents: 12,
+          affectedAreas: 256,
+          peopleAffected: 8450,
+          reliefCamps: 45
+        };
+      },
+
+      async postAlert(payload) {
+        console.log(`[REST] POST ${this.baseURL}/gov/alerts`, payload);
+        if (window.rakshaSocket) {
+          window.rakshaSocket.emit('alert.broadcast', payload);
+        }
+        playEmergencyChime();
+        return { status: 'broadcasted', recipientsCount: 45210 };
+      }
+    };
+
+    // 5. SOCKET.IO REAL-TIME EVENT BUS (SRS Section 7.1)
+    let socket = null;
+    try {
+      if (typeof io !== 'undefined') {
+        socket = io('http://localhost:3000', { autoConnect: false });
+        window.rakshaSocket = socket;
+        
+        socket.on('connect', () => {
+          document.getElementById('ws-indicator').textContent = 'WebSocket: Connected';
+        });
+
+        socket.on('map.incidents', (data) => console.log('[WS] map.incidents:', data));
+        socket.on('team.tracking', (data) => console.log('[WS] team.tracking:', data));
+        socket.on('mission.status', (data) => console.log('[WS] mission.status:', data));
+        socket.on('sos.alert', (data) => {
+          console.log('[WS] sos.alert received:', data);
+          playEmergencyChime();
+          showToast('🚨 Critical SOS Alert Received!', '⚠️');
+        });
+        socket.on('alerts.broadcast', (data) => console.log('[WS] alerts.broadcast:', data));
+      }
+    } catch (e) {
+      console.log('Socket.IO in local standalone simulation mode.');
+    }
+
+    // Real-Time Clock
+    function updateClock() {
+      const now = new Date();
+      const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+      const str = now.toLocaleDateString('en-GB', options).replace(',', ' |');
+      const el = document.getElementById('gov-live-clock');
+      if (el) el.textContent = str;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 6. MAP ENGINE: Mapbox GL JS with GeoJSON Hazard Inundation Polygons
+    let map = L.map('gov-map', {
+      zoomControl: true,
+      attributionControl: false
+    }).setView([26.18, 91.75], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+    }).addTo(map);
+
+    // Hazard Zones Polygons (PostGIS geometries rendered on Mapbox/Leaflet)
+    const highRiskZone = L.polygon([
+      [26.22, 91.68], [26.25, 91.78], [26.21, 91.86], [26.17, 91.82], [26.18, 91.70]
+    ], { color: '#ef4444', fillColor: '#ef4444', fillOpacity: 0.35, weight: 2 }).addTo(map)
+    .bindPopup("<strong>High Risk Flood Inundation (SRS Section 8.4)</strong><br>Brahmaputra Main Basin. Water level: +2.1m above danger mark.");
+
+    const mediumRiskZone = L.polygon([
+      [26.16, 91.62], [26.22, 91.68], [26.18, 91.70], [26.14, 91.65]
+    ], { color: '#f97316', fillColor: '#f97316', fillOpacity: 0.3, weight: 1.5 }).addTo(map)
+    .bindPopup("<strong>Medium Risk Zone</strong><br>Secondary tributaries overflowing. Water seepage in low-lying roads.");
+
+    const lowRiskZone = L.polygon([
+      [26.11, 91.68], [26.15, 91.74], [26.13, 91.82], [26.09, 91.76]
+    ], { color: '#eab308', fillColor: '#eab308', fillOpacity: 0.25, weight: 1.5 }).addTo(map)
+    .bindPopup("<strong>Low Risk Zone</strong><br>Watch and alert stage. Evacuation routes active.");
+
+    // Critical Marker with Ripple Effect
+    const customIcon = L.divIcon({
+      className: 'custom-div-icon',
+      html: `<div style="background-color:#ef4444; width:24px; height:24px; border-radius:50%; border:3px solid white; box-shadow:0 0 14px rgba(239,68,68,0.9); display:flex; align-items:center; justify-content:center; color:white; font-size:11px; font-weight:bold;">⚠️</div>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12]
+    });
+    const floodMarker = L.marker([26.20, 91.77], { icon: customIcon }).addTo(map);
+    floodMarker.bindPopup(`
+      <div style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div style="font-size:12px; font-weight:800; color:#991b1b; display:flex; align-items:center; gap:4px;">
+          🚨 Flood Warning
+        </div>
+        <div style="font-size:11px; font-weight:700; color:#1e293b; margin-top:2px;">Brahmaputra River</div>
+        <div style="font-size:10px; color:#475569; margin:4px 0;">
+          <strong>Severity:</strong> <span style="color:#dc2626; font-weight:bold;">High</span><br>
+          <strong>Reported:</strong> 18 Nov, 09:15 AM
+        </div>
+        <button onclick="showModal('Incident Details (SRS Entity: Incident)', 'Incident ID: #INC-BR-01\nType: Flood\nSeverity: High\nSource: SensedZoneState (IoT Ultrasonic Gauge + Verified Citizen Reports)\nStatus: Verified')" style="margin-top:4px; padding:4px 10px; background:#2563eb; color:white; font-size:10px; font-weight:bold; border-radius:6px; border:none; cursor:pointer;">
+          View Details
+        </button>
+      </div>
+    `).openPopup();
+
+    function focusMapAlert(lat, lng, title) {
+      map.setView([lat, lng], 13);
+      L.popup().setLatLng([lat, lng]).setContent(`<strong>${title}</strong><br>Active state monitoring in progress.`).openOn(map);
+      playEmergencyChime();
+    }
+
+    function triggerDataSync() {
+      showToast('🔄 Synced live state from PostgreSQL PostGIS cluster');
+    }
+
+    // Chart 1: Incident Trend
+    new Chart(document.getElementById('gov-trend-chart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['12 May', '13 May', '14 May', '15 May', '16 May', '17 May', '18 May'],
+        datasets: [{
+          label: 'Incidents Reported',
+          data: [4, 6, 5, 9, 8, 10, 12],
+          borderColor: '#2563eb',
+          backgroundColor: 'rgba(37, 99, 235, 0.08)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#2563eb',
+          pointRadius: 4,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10, family: '"JetBrains Mono"' } } },
+          y: { min: 0, max: 15, ticks: { stepSize: 3, font: { size: 10, family: '"JetBrains Mono"' } }, grid: { color: 'rgba(226, 232, 240, 0.4)' } }
+        }
+      }
+    });
+
+    // Chart 2: Resource Availability
+    new Chart(document.getElementById('gov-resource-chart').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Rescue Teams', 'Medical Teams', 'Vehicles', 'Shelters', 'Drones'],
+        datasets: [{
+          data: [65, 40, 70, 85, 50],
+          backgroundColor: ['#2563eb', '#ef4444', '#f59e0b', '#10b981', '#a855f7'],
+          borderWidth: 2,
+          borderColor: '#ffffff',
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        cutout: '68%'
+      }
+    });
+
+    // Modals
+    const modal = document.getElementById('general-modal');
+    const modalContainer = document.getElementById('modal-container');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    function showModal(title, text) {
+      modalTitle.innerHTML = `<span class="text-blue-600 font-black">🏛️</span> ${title}`;
+      modalBody.innerHTML = `<p class="whitespace-pre-line text-slate-700 dark:text-slate-300 font-medium">${text}</p>`;
+      document.getElementById('modal-action-btn').style.display = 'none';
+      openModalView();
+    }
+
+    function openActionModal(actionTitle, endpointDesc) {
+      modalTitle.innerHTML = `<span class="text-blue-600 font-black">⚡ Dispatch Action:</span> ${actionTitle}`;
+      modalBody.innerHTML = `
+        <div class="space-y-3">
+          <p class="text-slate-600 dark:text-slate-400 font-medium font-mono text-[11px] bg-slate-50 dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700">${endpointDesc}</p>
+          <div>
+            <label class="block text-slate-700 dark:text-slate-200 font-semibold mb-1 text-[11px]">Emergency Payload / Broadcast Text:</label>
+            <input type="text" id="action-input-msg" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl text-xs focus:outline-blue-600 text-slate-800 dark:text-white" value="RakshaSetu Level-3 Flood Inundation Warning. Evacuate low lands.">
+          </div>
+        </div>
+      `;
+      document.getElementById('modal-action-btn').style.display = 'inline-block';
+      document.getElementById('modal-action-btn').textContent = 'Dispatch via REST & WebSocket';
+      openModalView();
+    }
+
+    function openAiFeatureModal(title, desc) {
+      modalTitle.innerHTML = `<span class="text-indigo-600 font-black">💡 SRS AI Module:</span> ${title}`;
+      modalBody.innerHTML = `
+        <div class="space-y-3">
+          <p class="text-slate-700 dark:text-slate-300 font-medium whitespace-pre-line">${desc}</p>
+          <div class="p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl space-y-1 font-mono text-[10px]">
+            <div class="text-emerald-600 dark:text-emerald-400 font-bold">✓ Model Serving: Python + FastAPI (SRS Section 3)</div>
+            <div class="text-slate-600 dark:text-slate-400">• Event Ingest: Kafka Topic sensing.fused & anomaly.detected</div>
+            <div class="text-slate-600 dark:text-slate-400">• Database: PostgreSQL 16 + PostGIS spatial raster</div>
+          </div>
+        </div>
+      `;
+      document.getElementById('modal-action-btn').style.display = 'none';
+      openModalView();
+    }
+
+    function openModalView() {
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalContainer.classList.remove('scale-95', 'opacity-0');
+        modalContainer.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeModal() {
+      modalContainer.classList.remove('scale-100', 'opacity-100');
+      modalContainer.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 150);
+    }
+
+    function executeModalAction() {
+      const msg = document.getElementById('action-input-msg') ? document.getElementById('action-input-msg').value : '';
+      RakshaSetuAPI.postAlert({ message: msg, timestamp: new Date().toISOString() });
+      showToast('✅ Broadcast dispatched to Kafka topic alert.broadcast');
+      closeModal();
+    }
+
+    function fetchSRSIncidents() {
+      showModal('Incidents (GET /api/v1/gov/map/live)', 'Entity: Incident\n• 12 active incidents loaded from PostgreSQL + PostGIS.\n• SensedZoneState fusion running every hour per zone.');
+    }
+
+    function fetchSRSResources() {
+      showModal('Resource Service (GET /api/v1/gov/resources)', 'Entity: Resource\n• Inflatable Zodiac Boats: 10 units (6 deployed, 4 reserve)\n• Life Jackets: 60 units (45 deployed, 15 reserve)\n• Mobile Medical Units: 20 units (12 deployed, 8 reserve)');
+    }
+
+    function fetchSRSDepartments() {
+      showModal('Department Status (GET /api/v1/gov/departments/status)', 'NDRF, State Police, Health Dept, and Fire & Emergency units active on mesh radio frequency.');
+    }
+
+    function openAlertBroadcastModal() {
+      openActionModal('Broadcast Emergency Bulletin', 'POST /api/v1/gov/alerts');
+    }
+  </script>
+</body>
+</html>

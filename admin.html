@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>RakshaSetu — Admin Panel | Platform Operations & Analytics</title>
+  <meta name="title" content="RakshaSetu — Admin Panel | Platform Operations & Analytics">
+  <meta name="description" content="Central Administration Console for RakshaSetu Disaster Preparedness & Emergency Response Platform. Keycloak OAuth2 RBAC management, real-time audit logs, AI anomaly detection, and automated backup vaults.">
+  <meta name="keywords" content="RakshaSetu Admin, Keycloak RBAC, Audit Log Stream, Kafka Event Bus, Platform Analytics, Prometheus Health, Disaster Management Administration">
+  <meta name="author" content="National Disaster Response Directorate">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://rakshasetu.gov.in/admin.html">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rakshasetu.gov.in/admin.html">
+  <meta property="og:title" content="RakshaSetu — Admin Panel | Platform Operations & Analytics">
+  <meta property="og:description" content="Manage and optimize the RakshaSetu emergency platform with enterprise audit logging, Keycloak identity management, and system analytics.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1200&auto=format&fit=crop&q=80">
+  <meta property="og:site_name" content="RakshaSetu Platform">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://rakshasetu.gov.in/admin.html">
+  <meta property="twitter:title" content="RakshaSetu — Admin Panel | Platform Operations & Analytics">
+  <meta property="twitter:description" content="Platform administration, Keycloak RBAC, and real-time disaster analytics.">
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1200&auto=format&fit=crop&q=80">
+
+  <!-- Structured Data: JSON-LD for WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "RakshaSetu Administration Console",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All modern browsers",
+    "description": "Central management console for role assignments, immutable audit logging, and platform health telemetry.",
+    "browserRequirements": "Requires JavaScript. Requires HTML5."
+  }
+  </script>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Socket.IO Client (SRS Section 7.1) -->
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+  <!-- Lucide Icons & Chart.js -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Classy Typography: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            adminpurple: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              500: '#a855f7',
+              600: '#9333ea',
+              700: '#7e22ce',
+              800: '#6b21a8',
+              900: '#581c87',
+              950: '#3b0764',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Glassmorphic Card System */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dark .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    }
+    .glass-panel:hover {
+      box-shadow: 0 10px 25px -4px rgba(147, 51, 234, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#0d0714] text-slate-900 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-purple-600 selection:text-white transition-colors duration-300">
+
+  <!-- UNIFIED CONNECTED NAV BAR (Synchronized across all panels) -->
+  <header class="bg-slate-950 text-white px-4 lg:px-6 py-2.5 shadow-lg border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Active Role Capsule -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2.5 group" title="Return to RakshaSetu Gateway">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-fuchsia-500 flex items-center justify-center text-white font-extrabold shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+            🛡️
+          </div>
+          <div>
+            <div class="font-extrabold text-sm tracking-tight flex items-center gap-1.5 text-white">
+              RakshaSetu <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono font-bold border border-purple-500/30">v2.0</span>
+            </div>
+            <div class="text-[10px] text-purple-200/80 font-medium">Enterprise Management & Infrastructure Console</div>
+          </div>
+        </a>
+
+        <!-- Role Badge with Pill Indicator -->
+        <div class="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-800">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-purple-400 bg-purple-950/80 border border-purple-500/30 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+            4. Admin Panel
+          </span>
+        </div>
+      </div>
+
+      <!-- Center: Persistent Classy Role-Switching Pills -->
+      <nav class="hidden xl:flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-slate-800 text-xs font-semibold" aria-label="Role Navigation">
+        <a href="government.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span>🏛️ Government</span>
+        </a>
+        <a href="citizen.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span>👤 Citizen</span>
+        </a>
+        <a href="responder.html" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5">
+          <span>🚑 Rescue Team</span>
+        </a>
+        <a href="admin.html" class="px-3 py-1.5 rounded-lg bg-purple-600 text-white shadow-sm font-bold flex items-center gap-1.5" aria-current="page">
+          <span>⚙️ Admin</span>
+        </a>
+      </nav>
+
+      <!-- Right: Telemetry, Connected Theme & Audio Toggle -->
+      <div class="flex items-center gap-2.5 text-xs">
+        
+        <!-- Live Socket Telemetry Beacon -->
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-950/80 border border-purple-500/30 text-purple-300 font-mono text-[11px]">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Audit Bus: Active</span>
+        </div>
+
+        <!-- Connected Theme Switcher (Synced via localStorage) -->
+        <div class="flex items-center bg-slate-800 p-0.5 rounded-lg border border-slate-700">
+          <button onclick="setConnectedTheme('light')" id="theme-btn-light" class="p-1 rounded text-slate-400 hover:text-white" title="Light Theme">
+            <i data-lucide="sun" class="w-3.5 h-3.5"></i>
+          </button>
+          <button onclick="setConnectedTheme('dark')" id="theme-btn-dark" class="p-1 rounded text-slate-400 hover:text-white" title="Dark Theme">
+            <i data-lucide="moon" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Selector -->
+        <select onchange="location.href=this.value" class="xl:hidden bg-slate-800 border border-slate-700 text-white rounded-lg px-2 py-1 text-xs focus:outline-none cursor-pointer">
+          <option value="government.html">🏛️ Government</option>
+          <option value="citizen.html">👤 Citizen</option>
+          <option value="responder.html">🚑 Rescue Team</option>
+          <option value="admin.html" selected>⚙️ Admin</option>
+          <option value="index.html">🌐 All Panels</option>
+        </select>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- SUB-BAR: Official Specification Title Banner -->
+  <div class="bg-gradient-to-r from-purple-950 via-purple-900 to-indigo-950 text-white px-4 lg:px-6 py-2 shadow-sm border-b border-purple-950 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <div class="max-w-[1720px] mx-auto w-full flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold tracking-wide uppercase">4. ADMIN PANEL – MANAGE & OPTIMIZE SYSTEM</span>
+        <span class="text-purple-200 hidden md:inline">• System management, user control & platform analytics</span>
+      </div>
+      <div class="flex items-center gap-3 font-mono text-[11px] text-purple-200">
+        <span>Kong Gateway Cluster</span>
+        <span>•</span>
+        <span class="text-white font-bold">18 May 2025 | 10:30 AM</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col md:flex-row min-h-0 max-w-[1720px] mx-auto w-full">
+
+    <!-- LEFT SIDEBAR (Deep Indigo / Purple Command Sidebar) -->
+    <aside class="w-full md:w-56 bg-slate-950 text-purple-100 flex flex-col flex-shrink-0 border-r border-slate-800/80" aria-label="Admin Navigation">
+      
+      <!-- Panel Header -->
+      <div class="p-4 border-b border-slate-800/80 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-purple-600/30 text-purple-400 border border-purple-500/40 flex items-center justify-center font-bold text-sm shadow-sm">
+          AD
+        </div>
+        <div>
+          <div class="font-bold text-white text-xs leading-tight">Super Administrator</div>
+          <div class="text-[10px] text-slate-400 font-medium font-mono">Keycloak Master Realm</div>
+          <div class="text-[9px] text-emerald-400 font-mono mt-0.5">● IAM Full Privileges</div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="p-3 space-y-1 text-xs font-medium flex-1 overflow-y-auto custom-scrollbar">
+        <a href="admin.html" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#users" onclick="openAdminModal('User Management (GET /api/v1/admin/users)', 'Keycloak Directory:\n• Citizens: 810\n• Govt Officers: 224\n• Field Responders: 149\n• Administrators: 62\n\nAll accounts authenticated via OAuth 2.0 / OIDC + JWT.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="users" class="w-4 h-4 text-purple-400"></i>
+          <span>User Management</span>
+        </a>
+        <a href="#roles" onclick="openAdminModal('Role Management (POST /api/v1/admin/users/{id}/role)', 'RBAC Matrix (SRS Section 9.1):\n• Citizen: Own reports, SOS, chatbot\n• Government: Department dashboards, alert broadcast, deploy teams\n• Field Responder: Assigned missions, team status, verify\n• Admin: Platform control, audit logs, backup.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="shield-check" class="w-4 h-4 text-pink-400"></i>
+          <span>Role Management</span>
+        </a>
+        <a href="#logs" onclick="openAdminModal('System Logs (Elasticsearch Index)', 'Kafka topic: audit.event\n[10:15:02] POST /citizen/reports - 201 Created\n[10:08:44] FCM Push Broadcast to 45,210 tokens\n[10:00:12] PostgreSQL replica lag: 0ms.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="file-text" class="w-4 h-4 text-cyan-400"></i>
+          <span>System Logs</span>
+        </a>
+        <a href="#incidents" onclick="openAdminModal('Incident Lifecycle Engine', 'Incident State Machine: Unverified -> Verified -> Resolved\nTotal 156 incidents registered in PostgreSQL 16 + PostGIS cluster.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400"></i>
+          <span>Incident Management</span>
+        </a>
+        <a href="#content" onclick="openAdminModal('Content & Warning Bulletins', 'Publishing Console: Draft emergency advisory for cyclonic circulation over northern Bay of Bengal pending approval.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="edit-3" class="w-4 h-4 text-emerald-400"></i>
+          <span>Content Management</span>
+        </a>
+        <a href="#analytics" onclick="openAdminModal('Platform Analytics (SRS Section 3)', 'Throughput:\n• API Requests: 4.8M / 24h\n• Concurrent WebSocket sessions: 14,200\n• Mean API Latency: 18ms.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="bar-chart-2" class="w-4 h-4 text-blue-400"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="#settings" onclick="openAdminModal('Platform Configuration (PUT /api/v1/admin/settings)', 'Multi-Region Active-Passive deployment:\nPrimary: AWS ap-south-1 (Mumbai)\nStandby: Azure Central India (Pune)\nFailover target: 99.95% availability.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="settings" class="w-4 h-4 text-slate-400"></i>
+          <span>System Settings</span>
+        </a>
+        <a href="#notifications" onclick="openAdminModal('Notification Gateway (SRS Section 4.2)', 'Delivery Channels:\n• Push: Firebase Cloud Messaging (FCM) + Web Push\n• SMS Fallback: Twilio / MSG91\n• Voice IVRS: Enabled for critical flood evacuation.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="bell" class="w-4 h-4 text-amber-400"></i>
+          <span>Notifications</span>
+        </a>
+        <a href="#integrations" onclick="openAdminModal('External Integrations (SRS Section 3)', '• Weather API: OpenWeatherMap / IMD\n• Maps & Routing: Mapbox GL JS / OSM\n• Translations: NLU Translation Layer\n• Cloud Storage: AWS S3 / MinIO.')" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="network" class="w-4 h-4 text-teal-400"></i>
+          <span>Integrations</span>
+        </a>
+        <a href="#backup" onclick="triggerBackupAction()" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-900 text-slate-300 hover:text-white transition">
+          <i data-lucide="database" class="w-4 h-4 text-indigo-400"></i>
+          <span>Backup & Recovery</span>
+        </a>
+      </nav>
+
+      <div class="p-3 bg-slate-900/60 border-t border-slate-800 flex items-center justify-between text-[11px] font-mono">
+        <div class="flex items-center gap-1.5 text-emerald-400 font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>CLUSTER 98% UPTIME</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto custom-scrollbar p-4 lg:p-6 space-y-6">
+      
+      <!-- SUB-HEADER: Date & Gateway Cluster Pill -->
+      <div class="glass-panel p-3.5 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3 text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
+          <i data-lucide="clock" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
+          <span>18 May 2025 | 10:30 AM</span>
+        </div>
+
+        <div class="flex items-center gap-3 text-xs">
+          <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5 font-mono border border-emerald-200 dark:border-emerald-800">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Kong Gateway: Online
+          </span>
+          <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center gap-1.5 font-mono border border-purple-200 dark:border-purple-800">
+            Keycloak Realm: Synced
+          </span>
+        </div>
+      </div>
+
+      <!-- TOP 5 STAT CARDS (GET /api/v1/admin/dashboard/status) -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+        
+        <!-- 1. Total Users -->
+        <div class="glass-panel p-3.5 rounded-2xl flex items-center gap-3 hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0 border border-purple-200 dark:border-purple-900/50 shadow-sm">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-900 dark:text-white font-mono">1,245</div>
+            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Total Users</div>
+          </div>
+        </div>
+
+        <!-- 2. Active Incidents -->
+        <div class="glass-panel p-3.5 rounded-2xl flex items-center gap-3 hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-600 dark:text-orange-400 flex items-center justify-center text-lg font-bold flex-shrink-0 border border-orange-200 dark:border-orange-900/50 shadow-sm">
+            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-900 dark:text-white font-mono">156</div>
+            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Active Incidents</div>
+          </div>
+        </div>
+
+        <!-- 3. Departments -->
+        <div class="glass-panel p-3.5 rounded-2xl flex items-center gap-3 hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg font-bold flex-shrink-0 border border-blue-200 dark:border-blue-900/50 shadow-sm">
+            <i data-lucide="building" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-900 dark:text-white font-mono">85</div>
+            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Departments</div>
+          </div>
+        </div>
+
+        <!-- 4. Rescue Teams -->
+        <div class="glass-panel p-3.5 rounded-2xl flex items-center gap-3 hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 flex items-center justify-center text-lg font-bold flex-shrink-0 border border-indigo-200 dark:border-indigo-900/50 shadow-sm">
+            <i data-lucide="cross" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-900 dark:text-white font-mono">4</div>
+            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">Rescue Teams</div>
+          </div>
+        </div>
+
+        <!-- 5. System Uptime -->
+        <div class="glass-panel p-3.5 rounded-2xl flex items-center gap-3 col-span-2 sm:col-span-1 hover:-translate-y-0.5 transition">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg font-bold flex-shrink-0 border border-emerald-200 dark:border-emerald-900/50 shadow-sm">
+            <i data-lucide="activity" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="text-2xl font-black text-slate-900 dark:text-white font-mono">98%</div>
+            <div class="text-[11px] font-bold text-slate-700 dark:text-slate-300">System Uptime</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MIDDLE ROW: PLATFORM OVERVIEW, USER DISTRIBUTION, SYSTEM HEALTH -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Platform Overview Chart (col-span-6) -->
+        <div class="lg:col-span-6 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-2">
+            <h2 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+              <i data-lucide="trending-up" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i> Platform Overview
+            </h2>
+
+            <!-- Multi-line chart legend -->
+            <div class="flex items-center gap-3 text-[10px] font-semibold text-slate-600 dark:text-slate-300 font-mono">
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Users</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-500"></span> Incidents</span>
+              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Reports</span>
+            </div>
+          </div>
+
+          <div class="h-52 relative">
+            <canvas id="admin-platform-chart"></canvas>
+          </div>
+
+          <div class="flex justify-between text-[10px] text-slate-400 mt-2 font-mono">
+            <span>Aggregated Kafka Event Stream</span>
+            <span>12 May – 18 May</span>
+          </div>
+        </div>
+
+        <!-- User Distribution Donut (col-span-3) -->
+        <div class="lg:col-span-3 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-2">
+            <h2 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+              <i data-lucide="pie-chart" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i> User Distribution
+            </h2>
+          </div>
+
+          <div class="h-36 relative flex items-center justify-center">
+            <canvas id="admin-user-dist-chart"></canvas>
+          </div>
+
+          <!-- Legend list -->
+          <div class="space-y-1 text-[10px] text-slate-600 dark:text-slate-300 mt-2 font-medium">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Citizens</span>
+              <span class="font-bold text-slate-900 dark:text-white font-mono">65%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-orange-500"></span> Government</span>
+              <span class="font-bold text-slate-900 dark:text-white font-mono">18%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-600"></span> Rescue Teams</span>
+              <span class="font-bold text-slate-900 dark:text-white font-mono">12%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-pink-500"></span> Admin</span>
+              <span class="font-bold text-slate-900 dark:text-white font-mono">5%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Health (col-span-3) -->
+        <div class="lg:col-span-3 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-3">
+              <h2 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> System Health (Prometheus)
+              </h2>
+              <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 rounded font-mono">All Green</span>
+            </div>
+
+            <div class="space-y-2.5 text-xs">
+              
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <span class="font-semibold text-slate-800 dark:text-slate-200">Server Status</span>
+                <span class="flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Operational
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <span class="font-semibold text-slate-800 dark:text-slate-200">Database (PostGIS)</span>
+                <span class="flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Operational
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <span class="font-semibold text-slate-800 dark:text-slate-200">API Services (NestJS)</span>
+                <span class="flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Operational
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <span class="font-semibold text-slate-800 dark:text-slate-200">Storage (AWS S3)</span>
+                <span class="flex items-center gap-1.5 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Operational
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="text-[10px] text-slate-400 mt-2 font-mono">Latency: 18ms • AWS ap-south-1</div>
+        </div>
+
+      </div>
+
+      <!-- LOWER ROW: RECENT ACTIVITY & SYSTEM ANALYTICS -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        
+        <!-- Recent Activity Table (col-span-8) -->
+        <div class="lg:col-span-8 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800 mb-3">
+              <h2 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <i data-lucide="history" class="w-4 h-4 text-purple-600"></i> Recent Activity (AuditLog Trail)
+              </h2>
+              <button onclick="openAdminModal('Full Audit Log Stream (GET /api/v1/admin/audit-logs)', 'Entity: AuditLog (SRS Section 5)\n• 10:15 AM - New Incident Reported by Citizen User (Completed)\n• 10:08 AM - Alert Broadcast to Kamrup Zone (Completed)\n• 10:00 AM - Resource Updated by Admin User (Completed)\n• 09:45 AM - User Registered: citizen_482 (Completed)')" class="text-xs text-purple-600 font-bold hover:underline">View All</button>
+            </div>
+
+            <!-- Table -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="text-[10px] text-slate-400 uppercase border-b border-slate-200 dark:border-slate-800 pb-2 font-mono">
+                    <th class="py-1.5 font-semibold">Activity</th>
+                    <th class="py-1.5 font-semibold">User</th>
+                    <th class="py-1.5 font-semibold">Time</th>
+                    <th class="py-1.5 font-semibold text-right">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                  <tr>
+                    <td class="py-2.5 font-semibold text-slate-900 dark:text-white">New Incident Reported</td>
+                    <td class="py-2.5 text-slate-500">Citizen User</td>
+                    <td class="py-2.5 font-mono text-[11px]">10:15 AM</td>
+                    <td class="py-2.5 text-right"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 font-semibold text-slate-900 dark:text-white">Alert Sent</td>
+                    <td class="py-2.5 text-slate-500">System</td>
+                    <td class="py-2.5 font-mono text-[11px]">10:08 AM</td>
+                    <td class="py-2.5 text-right"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 font-semibold text-slate-900 dark:text-white">Resource Updated</td>
+                    <td class="py-2.5 text-slate-500">Admin User</td>
+                    <td class="py-2.5 font-mono text-[11px]">10:00 AM</td>
+                    <td class="py-2.5 text-right"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 font-semibold text-slate-900 dark:text-white">User Registered</td>
+                    <td class="py-2.5 text-slate-500">Citizen User</td>
+                    <td class="py-2.5 font-mono text-[11px]">09:45 AM</td>
+                    <td class="py-2.5 text-right"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">Completed</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="text-[10px] text-slate-400 mt-2 font-mono">Immutable append-only audit trail in PostgreSQL</div>
+        </div>
+
+        <!-- System Analytics 4 Tiles (col-span-4) -->
+        <div class="lg:col-span-4 glass-panel p-4 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="pb-2 border-b border-slate-200 dark:border-slate-800 mb-3">
+              <h2 class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <i data-lucide="bar-chart" class="w-4 h-4 text-purple-600"></i> System Analytics
+              </h2>
+            </div>
+
+            <!-- 4 Metric Cards Grid -->
+            <div class="grid grid-cols-2 gap-3">
+              
+              <!-- Reports -->
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Reports</div>
+                <div class="text-xl font-black text-slate-900 dark:text-white font-mono mt-0.5">2,450</div>
+                <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">↑ 12%</div>
+              </div>
+
+              <!-- Alerts Sent -->
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Alerts Sent</div>
+                <div class="text-xl font-black text-slate-900 dark:text-white font-mono mt-0.5">1,320</div>
+                <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">↑ 8%</div>
+              </div>
+
+              <!-- Active Sessions -->
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Active Sessions</div>
+                <div class="text-xl font-black text-slate-900 dark:text-white font-mono mt-0.5">3,210</div>
+                <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">↑ 15%</div>
+              </div>
+
+              <!-- Data Usage -->
+              <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                <div class="text-[10px] font-bold text-slate-500 dark:text-slate-400">Data Usage</div>
+                <div class="text-xl font-black text-slate-900 dark:text-white font-mono mt-0.5">120 GB</div>
+                <div class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 font-mono">↑ 10%</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="text-[10px] text-slate-400 mt-2 font-mono">Telemetry rolling 24-hour cycle</div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM ROW: INNOVATIVE FEATURES -->
+      <div class="glass-panel p-4 rounded-2xl space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800">INNOVATIVE FEATURES</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Enterprise Management & Resilience</span>
+          </div>
+          <span class="text-[11px] text-slate-400 hidden sm:inline">Click to inspect subsystem</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          
+          <!-- F1 -->
+          <div onclick="openAdminModal('AI Anomaly Detection (SRS Section 8.1)', 'Scikit-learn / PyTorch anomaly detector scanning incoming citizen report rate against historical baseline.\nFlags anomalies to Kafka topic anomaly.detected.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-purple-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="shield-alert" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">AI Anomaly Detection</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Detect unusual patterns & threats</div>
+          </div>
+
+          <!-- F2 -->
+          <div onclick="triggerBackupAction()" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-blue-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="hard-drive" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Auto Backup</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">POST /api/v1/admin/backup/run</div>
+          </div>
+
+          <!-- F3 -->
+          <div onclick="openAdminModal('Smart Notifications Engine (SRS Section 4.2)', 'Notification Service handles fan-out across Push (FCM), SMS (Twilio), and IVRS voice. Prioritizes P1 emergency alerts.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-emerald-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="bell" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Smart Notifications</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Intelligent notification management</div>
+          </div>
+
+          <!-- F4 -->
+          <div onclick="openAdminModal('Performance Monitoring (SRS Section 3)', 'Prometheus + Grafana + Sentry stack tracking container metrics, memory heap, and Kafka consumer group lag.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-indigo-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Performance Monitoring</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Real-time system monitoring</div>
+          </div>
+
+          <!-- F5 -->
+          <div onclick="openAdminModal('Role-Based Access Control (SRS Section 9.1)', 'Keycloak OAuth2 / OIDC token issuer enforcing Principle of Least Privilege across all 4 panels.')" class="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 hover:border-pink-500 hover:scale-[1.02] cursor-pointer transition group shadow-sm">
+            <div class="w-8 h-8 rounded-lg bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center mb-2 group-hover:scale-110 transition">
+              <i data-lucide="lock" class="w-4 h-4"></i>
+            </div>
+            <div class="text-xs font-bold text-slate-900 dark:text-white">Role-Based Access</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">Granular access control</div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-notification" class="fixed bottom-5 right-5 z-[2000] translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2.5 text-xs font-medium">
+      <span id="toast-icon">✓</span>
+      <span id="toast-message">Notification</span>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE MODAL -->
+  <div id="admin-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-[1000] hidden flex items-center justify-center p-4">
+    <div class="glass-panel bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl p-6 space-y-4 transform transition-all scale-95 opacity-0 duration-200" id="admin-modal-container">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+        <h3 id="admin-modal-title" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2"></h3>
+        <button onclick="closeAdminModal()" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="admin-modal-body" class="text-xs text-slate-600 dark:text-slate-300 space-y-3 leading-relaxed"></div>
+      <div class="flex justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+        <button onclick="closeAdminModal()" class="px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold hover:bg-purple-700 transition shadow-md shadow-purple-600/30">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. CONNECTED THEME SYSTEM
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem('rakshasetu_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
+    }
+    function setConnectedTheme(mode) {
+      localStorage.setItem('rakshasetu_theme', mode);
+      applySavedTheme();
+      showToast(mode === 'dark' ? '🌙 Dark Theme Applied' : '☀️ Light Theme Applied');
+    }
+    applySavedTheme();
+
+    // 2. TOAST NOTIFICATION UTILITY
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = msg;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // 3. REST API CLIENT (SRS Section 6.4)
+    const RakshaSetuAdminAPI = {
+      baseURL: 'http://localhost:3000/api/v1',
+      token: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.srs-admin-token',
+
+      async getPlatformStatus() {
+        console.log(`[REST] GET ${this.baseURL}/admin/dashboard/status`);
+        return { totalUsers: 1245, activeIncidents: 156, uptime: '98%' };
+      },
+
+      async triggerBackup() {
+        console.log(`[REST] POST ${this.baseURL}/admin/backup/run`);
+        return { status: 'triggered', backupId: 'BKP-2025-05-18-01', storage: 'AWS S3 Vault' };
+      }
+    };
+
+    // Chart 1: Platform Overview
+    new Chart(document.getElementById('admin-platform-chart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['12 May', '13 May', '14 May', '15 May', '16 May', '17 May', '18 May'],
+        datasets: [
+          { label: 'Users', data: [600, 850, 750, 1100, 1050, 1200, 1245], borderColor: '#2563eb', tension: 0.4, pointRadius: 3 },
+          { label: 'Incidents', data: [40, 65, 50, 95, 80, 140, 156], borderColor: '#f97316', tension: 0.4, pointRadius: 3 },
+          { label: 'Reports', data: [120, 210, 180, 320, 290, 410, 480], borderColor: '#10b981', tension: 0.4, pointRadius: 3 }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 10, family: '"JetBrains Mono"' } } },
+          y: { grid: { color: 'rgba(226, 232, 240, 0.4)' }, ticks: { font: { size: 10, family: '"JetBrains Mono"' } } }
+        }
+      }
+    });
+
+    // Chart 2: User Distribution
+    new Chart(document.getElementById('admin-user-dist-chart').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Citizens', 'Government', 'Rescue Teams', 'Admin'],
+        datasets: [{
+          data: [65, 18, 12, 5],
+          backgroundColor: ['#2563eb', '#f97316', '#a855f7', '#ec4899'],
+          borderWidth: 2,
+          borderColor: '#ffffff',
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        cutout: '68%'
+      }
+    });
+
+    // Modal
+    const modal = document.getElementById('admin-modal');
+    const modalContainer = document.getElementById('admin-modal-container');
+    const modalTitle = document.getElementById('admin-modal-title');
+    const modalBody = document.getElementById('admin-modal-body');
+
+    function openAdminModal(title, text) {
+      modalTitle.innerHTML = `<span class="text-purple-600 font-black">⚙️</span> ${title}`;
+      modalBody.innerHTML = `<p class="whitespace-pre-line text-slate-700 dark:text-slate-300 font-medium">${text}</p>`;
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modalContainer.classList.remove('scale-95', 'opacity-0');
+        modalContainer.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeAdminModal() {
+      modalContainer.classList.remove('scale-100', 'opacity-100');
+      modalContainer.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 150);
+    }
+
+    function triggerBackupAction() {
+      RakshaSetuAdminAPI.triggerBackup();
+      showToast("💾 AWS S3 Georedundant Snapshot Initiated!");
+      openAdminModal('Backup & Recovery Service (POST /api/v1/admin/backup/run)', '✅ On-demand snapshot initiated:\n• Target: AWS S3 Georedundant Vault\n• Database: PostgreSQL 16 Point-in-Time\n• Status: Syncing\n• Checksum: SHA-256 Verified');
+    }
+  </script>
+</body>
+</html>

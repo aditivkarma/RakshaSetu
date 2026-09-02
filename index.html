@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>RakshaSetu — Unified Disaster Preparedness & Emergency Response Platform</title>
+  <meta name="title" content="RakshaSetu — Unified Disaster Preparedness & Emergency Response Platform">
+  <meta name="description" content="Official Gateway for RakshaSetu — India's next-generation emergency disaster response ecosystem. 4 specialized panels for Government command, Citizen safety, Field rescue teams, and Platform administration.">
+  <meta name="keywords" content="RakshaSetu, Disaster Preparedness, Emergency Response Platform, NDRF Portal, Flood Warning Assam, 112 SOS, Mapbox Tactical Routing, Keycloak RBAC">
+  <meta name="author" content="National Disaster Response Directorate">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://rakshasetu.gov.in/index.html">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rakshasetu.gov.in/index.html">
+  <meta property="og:title" content="RakshaSetu — Unified Disaster Preparedness & Emergency Response Platform">
+  <meta property="og:description" content="Next-generation multi-agency disaster preparedness platform with real-time GIS spatial maps, 112 emergency SOS, and tactical rescue operations.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1200&auto=format&fit=crop&q=80">
+  <meta property="og:site_name" content="RakshaSetu Platform">
+
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://rakshasetu.gov.in/index.html">
+  <meta property="twitter:title" content="RakshaSetu — Unified Disaster Response Platform">
+  <meta property="twitter:description" content="Connecting Government, Citizens, Rescue Teams, and Administrators in one unified real-time ecosystem.">
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1200&auto=format&fit=crop&q=80">
+
+  <!-- Structured Data: JSON-LD for National Emergency Platform -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GovernmentOrganization",
+    "name": "RakshaSetu National Disaster Response Directorate",
+    "url": "https://rakshasetu.gov.in",
+    "logo": "https://rakshasetu.gov.in/logo.png",
+    "description": "Unified national platform orchestrating disaster preparedness, public warnings, citizen SOS requests, and tactical field search-and-rescue teams.",
+    "telephone": "112",
+    "sameAs": [
+      "https://twitter.com/NDRFHQ",
+      "https://ndma.gov.in"
+    ]
+  }
+  </script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Classy Typography: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Premium Glassmorphic System */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+    }
+    .glass-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Ambient Glow Accents */
+    .glow-blue:hover {
+      box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.25);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    .glow-green:hover {
+      box-shadow: 0 20px 40px -10px rgba(22, 163, 74, 0.25);
+      border-color: rgba(34, 197, 94, 0.5);
+    }
+    .glow-orange:hover {
+      box-shadow: 0 20px 40px -10px rgba(234, 88, 12, 0.25);
+      border-color: rgba(249, 115, 22, 0.5);
+    }
+    .glow-purple:hover {
+      box-shadow: 0 20px 40px -10px rgba(147, 51, 234, 0.25);
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#070b14] text-slate-900 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white transition-colors duration-300">
+
+  <!-- UNIFIED HEADER -->
+  <header class="bg-slate-950 text-white px-4 lg:px-8 py-3.5 shadow-lg border-b border-slate-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      
+      <!-- Brand Identity -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+          🛡️
+        </div>
+        <div>
+          <div class="font-black text-lg tracking-tight flex items-center gap-2 text-white">
+            RakshaSetu <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono font-bold border border-blue-500/30">v2.0 CONSOLIDATED</span>
+          </div>
+          <div class="text-xs text-slate-400 font-medium">National Disaster Preparedness & Emergency Response Platform</div>
+        </div>
+      </a>
+
+      <!-- Right Controls: Theme Switcher & Status -->
+      <div class="flex items-center gap-3 text-xs">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 font-mono">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span>Ecosystem Online: 4 Panels Active</span>
+        </div>
+
+        <!-- Audio Alert Chime Toggle -->
+        <button onclick="toggleAudioAlert()" id="audio-alert-btn" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition" title="Test Emergency Audio Chime">
+          <i data-lucide="volume-2" class="w-4 h-4 text-blue-400"></i>
+        </button>
+
+        <!-- Connected Theme Switcher -->
+        <div class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700">
+          <button onclick="setConnectedTheme('light')" id="theme-btn-light" class="p-1.5 rounded-lg text-slate-400 hover:text-white" title="Light Mode">
+            <i data-lucide="sun" class="w-4 h-4"></i>
+          </button>
+          <button onclick="setConnectedTheme('dark')" id="theme-btn-dark" class="p-1.5 rounded-lg text-slate-400 hover:text-white" title="Dark Mode">
+            <i data-lucide="moon" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="py-12 lg:py-16 px-4 relative overflow-hidden">
+    <div class="max-w-5xl mx-auto text-center space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-xs font-mono font-bold tracking-wide shadow-sm">
+        <span>⚡ ARCHITECTURE ALIGNED WITH BACKEND SRS v2.0 (SEPTEMBER 2026)</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+        One Platform. <span class="bg-gradient-to-r from-blue-600 via-emerald-600 to-orange-500 bg-clip-text text-transparent">Four Cohesive Panels.</span>
+      </h1>
+
+      <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-medium">
+        Select your role below to launch the dedicated standalone panel. Each interface is connected via real-time WebSocket telemetry, synchronized themes, and REST endpoints.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4 PRIMARY ROLE CARDS (Connected Luxury Aesthetic) -->
+  <section class="max-w-7xl mx-auto px-4 pb-16 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- 1. Government Panel Card -->
+      <div class="glass-card glow-blue rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-blue-600">
+        <div>
+          <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl font-bold shadow-md shadow-blue-600/20">
+              🏛️
+            </div>
+            <span class="text-[10px] font-mono font-bold bg-blue-50 dark:bg-blue-950/80 text-blue-700 dark:text-blue-300 px-2.5 py-1 rounded-full border border-blue-200 dark:border-blue-800">ROLE: GOV</span>
+          </div>
+
+          <h2 class="text-lg font-black text-slate-900 dark:text-white leading-tight">1. Government Panel</h2>
+          <div class="text-xs font-bold text-blue-600 dark:text-blue-400 mt-0.5">Command & Control Dashboard</div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
+            Macro spatial GIS monitoring, flood inundation modeling, department logistics, and mass alert broadcasts.
+          </p>
+
+          <ul class="mt-4 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+            <li class="flex items-center gap-2"><span class="text-blue-600 font-bold">•</span> Mapbox GL JS Spatial Maps</li>
+            <li class="flex items-center gap-2"><span class="text-blue-600 font-bold">•</span> Z-score Anomaly Detector</li>
+            <li class="flex items-center gap-2"><span class="text-blue-600 font-bold">•</span> Multi-Department Dispatch</li>
+          </ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <a href="government.html" class="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center transition shadow-lg shadow-blue-600/25 flex items-center justify-center gap-1.5">
+            <span>Launch Panel</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+          <button onclick="previewPanel('government.html', 'Government Command')" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition" title="Preview Panel Inline">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Citizen Panel Card -->
+      <div class="glass-card glow-green rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-emerald-600">
+        <div>
+          <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl font-bold shadow-md shadow-emerald-600/20">
+              👤
+            </div>
+            <span class="text-[10px] font-mono font-bold bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">ROLE: CITIZEN</span>
+          </div>
+
+          <h2 class="text-lg font-black text-slate-900 dark:text-white leading-tight">2. Citizen Panel</h2>
+          <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">Stay Informed, Stay Safe</div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
+            One-tap 112 emergency SOS, real-time localized warnings, nearest relief shelters, and multilingual AI assistant.
+          </p>
+
+          <ul class="mt-4 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+            <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">•</span> 112 High-Priority SOS (&lt;3s)</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">•</span> Nearest Shelter Geolocation</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600 font-bold">•</span> Rasa NLU / LLM Safety Copilot</li>
+          </ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <a href="citizen.html" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs text-center transition shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-1.5">
+            <span>Launch Panel</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+          <button onclick="previewPanel('citizen.html', 'Citizen Safety App')" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition" title="Preview Panel Inline">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Field Responder Panel Card -->
+      <div class="glass-card glow-orange rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-orange-600">
+        <div>
+          <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-orange-100 dark:bg-orange-950 text-orange-600 dark:text-orange-400 flex items-center justify-center text-2xl font-bold shadow-md shadow-orange-600/20">
+              🚑
+            </div>
+            <span class="text-[10px] font-mono font-bold bg-orange-50 dark:bg-orange-950/80 text-orange-700 dark:text-orange-300 px-2.5 py-1 rounded-full border border-orange-200 dark:border-orange-800">ROLE: RESPONDER</span>
+          </div>
+
+          <h2 class="text-lg font-black text-slate-900 dark:text-white leading-tight">3. Rescue Team Panel</h2>
+          <div class="text-xs font-bold text-orange-600 dark:text-orange-400 mt-0.5">Respond & Save Lives</div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
+            Tactical HUD for search-and-rescue teams: AI mission priority queues, navigable water channels, and VHF radio.
+          </p>
+
+          <ul class="mt-4 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+            <li class="flex items-center gap-2"><span class="text-orange-600 font-bold">•</span> AI Priority Queue Scoring</li>
+            <li class="flex items-center gap-2"><span class="text-orange-600 font-bold">•</span> Safe vs Blocked Channels</li>
+            <li class="flex items-center gap-2"><span class="text-orange-600 font-bold">•</span> Live Two-Way Radio Comms</li>
+          </ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <a href="responder.html" class="flex-1 py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs text-center transition shadow-lg shadow-orange-600/25 flex items-center justify-center gap-1.5">
+            <span>Launch Panel</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+          <button onclick="previewPanel('responder.html', 'Rescue Team HUD')" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition" title="Preview Panel Inline">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Admin Panel Card -->
+      <div class="glass-card glow-purple rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-purple-600">
+        <div>
+          <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl font-bold shadow-md shadow-purple-600/20">
+              ⚙️
+            </div>
+            <span class="text-[10px] font-mono font-bold bg-purple-50 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 px-2.5 py-1 rounded-full border border-purple-200 dark:border-purple-800">ROLE: ADMIN</span>
+          </div>
+
+          <h2 class="text-lg font-black text-slate-900 dark:text-white leading-tight">4. Admin Panel</h2>
+          <div class="text-xs font-bold text-purple-600 dark:text-purple-400 mt-0.5">Manage & Optimize System</div>
+          <p class="text-xs text-slate-600 dark:text-slate-400 mt-3 leading-relaxed">
+            Enterprise infrastructure oversight, Keycloak RBAC directory, immutable audit logs, and automated cloud backup.
+          </p>
+
+          <ul class="mt-4 space-y-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
+            <li class="flex items-center gap-2"><span class="text-purple-600 font-bold">•</span> Keycloak IAM & OAuth2</li>
+            <li class="flex items-center gap-2"><span class="text-purple-600 font-bold">•</span> Kafka Immutable Audit Trail</li>
+            <li class="flex items-center gap-2"><span class="text-purple-600 font-bold">•</span> AWS S3 Georedundant Backups</li>
+          </ul>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+          <a href="admin.html" class="flex-1 py-2.5 px-4 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs text-center transition shadow-lg shadow-purple-600/25 flex items-center justify-center gap-1.5">
+            <span>Launch Panel</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </a>
+          <button onclick="previewPanel('admin.html', 'Admin Console')" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition" title="Preview Panel Inline">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INTERACTIVE INLINE PREVIEW DRAWER -->
+    <div id="preview-section" class="mt-12 glass-card rounded-3xl p-6 hidden">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></div>
+          <div>
+            <h3 class="font-black text-slate-900 dark:text-white text-base" id="preview-title">Live Panel Preview</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 font-mono" id="preview-url">government.html</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="setPreviewDevice('desktop')" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-slate-200 transition">🖥️ Desktop</button>
+          <button onclick="setPreviewDevice('mobile')" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-slate-200 transition">📱 Mobile</button>
+          <button onclick="closePreview()" class="p-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="w-full flex justify-center bg-slate-100 dark:bg-slate-900/60 rounded-2xl p-4 overflow-hidden">
+        <iframe id="preview-frame" src="government.html" class="w-full h-[600px] rounded-xl border border-slate-300 dark:border-slate-700 shadow-2xl transition-all duration-300"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 text-slate-400 text-xs py-8 px-4 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-white">RakshaSetu v2.0</span>
+        <span>•</span>
+        <span>National Disaster Preparedness & Emergency Response Platform</span>
+      </div>
+      <div class="font-mono text-[11px] text-slate-500">
+        Assam & Brahmaputra Basin Deployment • Code Alpha-1 Ready
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toast-notification" class="fixed bottom-5 right-5 z-[2000] translate-y-20 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-2.5 text-xs font-medium">
+      <span id="toast-icon">✓</span>
+      <span id="toast-message">Notification</span>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. CONNECTED THEME ENGINE
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem('rakshasetu_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
+    }
+    function setConnectedTheme(mode) {
+      localStorage.setItem('rakshasetu_theme', mode);
+      applySavedTheme();
+      showToast(mode === 'dark' ? '🌙 Dark Theme Applied' : '☀️ Light Theme Applied');
+    }
+    applySavedTheme();
+
+    // 2. TOAST NOTIFICATION UTILITY
+    function showToast(msg, icon = '✓') {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').textContent = msg;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 3000);
+    }
+
+    // 3. AUDIO EMERGENCY CHIME
+    let audioContext = null;
+    let audioAlertsEnabled = true;
+    function playEmergencyChime() {
+      if (!audioAlertsEnabled) return;
+      try {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioContext.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, audioContext.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.15, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.start();
+        osc.stop(audioContext.currentTime + 0.35);
+      } catch (e) {}
+    }
+    function toggleAudioAlert() {
+      audioAlertsEnabled = !audioAlertsEnabled;
+      const btn = document.getElementById('audio-alert-btn');
+      if (audioAlertsEnabled) {
+        btn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4 text-blue-400"></i>';
+        showToast('🔊 Audio Chimes Enabled');
+        playEmergencyChime();
+      } else {
+        btn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4 text-slate-400"></i>';
+        showToast('🔇 Audio Chimes Muted');
+      }
+      lucide.createIcons();
+    }
+
+    // 4. INTERACTIVE LIVE PREVIEW DRAWER
+    function previewPanel(file, title) {
+      const sec = document.getElementById('preview-section');
+      const frame = document.getElementById('preview-frame');
+      document.getElementById('preview-title').textContent = title;
+      document.getElementById('preview-url').textContent = file;
+      frame.src = file;
+      sec.classList.remove('hidden');
+      sec.scrollIntoView({ behavior: 'smooth' });
+      showToast(`👁️ Previewing ${title}`);
+    }
+
+    function setPreviewDevice(mode) {
+      const frame = document.getElementById('preview-frame');
+      if (mode === 'mobile') {
+        frame.style.width = '390px';
+        frame.style.height = '680px';
+      } else {
+        frame.style.width = '100%';
+        frame.style.height = '600px';
+      }
+    }
+
+    function closePreview() {
+      document.getElementById('preview-section').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
